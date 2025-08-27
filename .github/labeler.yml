@@ -1,0 +1,142 @@
+workflows:
+  - changed-files:
+      - any-glob-to-any-file: [ '.github/workflows/**/*' ]
+
+dependency:
+  - changed-files:
+      - any-glob-to-any-file: [ 'pom.xml' ]
+
+docker:
+  - changed-files:
+      - any-glob-to-any-file: [ 'Dockerfile', 'compose.yaml', '.dockerignore' ]
+
+bug:
+  - head-branch: [ '^fix', 'fix', '!code-scanning', '!scanning', '!fix-code-scanning' ]
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file: [ 'docs/**', '*.md' ]
+
+github:
+  - changed-files:
+      - any-glob-to-any-file: [ '.github/**/*' ]
+
+analytics:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-analytics' ]
+
+audit:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-audit' ]
+
+auth:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-auth' ]
+
+billing:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-billing' ]
+
+bom:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-bom' ]
+
+cache:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-cache' ]
+
+cart:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-cart' ]
+
+catalog:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-catalog' ]
+
+cms:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-cms' ]
+
+core:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-core' ]
+
+geo:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-geo' ]
+
+graphql:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-graphql' ]
+
+inventory:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-inventory' ]
+
+logging:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-logging' ]
+
+mail:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-mail' ]
+
+media:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-media' ]
+
+notification:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-notification' ]
+
+order:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-order' ]
+
+payment:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-payment' ]
+
+product:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-product' ]
+
+promotion:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-promotion' ]
+
+redis:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-redis' ]
+
+rest:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-rest' ]
+
+review:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-review' ]
+
+sandbox:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-sandbox' ]
+
+search:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-search' ]
+
+shipment:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-shipment' ]
+
+user:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-user' ]
+
+web:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-web' ]
+
+webhook:
+  - changed-files:
+      - any-glob-to-any-file: [ 'modules/merkana-webhook' ]

@@ -1,0 +1,129 @@
+services:
+  api:
+    container_name: merkana-api-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      # JWT
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      # PostgreSQL Database
+      PG_NAME: ${PG_NAME}
+      PG_URL: ${PG_URL}
+      PG_USER: ${PG_USER}
+      PG_PASSWORD: ${PG_PASSWORD}
+      PG_PORT: ${PG_PORT}
+      PG_DB: ${PG_DB}
+      # Redis
+      REDIS_NAME: ${REDIS_NAME}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_URL: ${REDIS_URL}
+      REDIS_USER: ${REDIS_USER}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_DATABASE: ${REDIS_DATABASE}
+      # Elasticsearch
+      ELASTIC_HOST: ${ELASTIC_HOST}
+      ELASTIC_USERNAME: ${ELASTIC_USERNAME}
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+    ports:
+      - "${API_PORT}:9093"
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -f http://localhost:${API_PORT}/actuator/health || exit 1" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    restart: on-failure
+    depends_on:
+      - postgres-dev
+      - redis-dev
+    networks:
+      - merkana-dev-net
+
+  postgres-dev:
+    container_name: merkana-pg-dev
+    image: postgres:16.9
+    restart: always
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - merkana-pg-dev-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "sh -c 'pg_isready -U ${PG_USER} -d ${PG_DB}'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - merkana-dev-net
+
+  redis-dev:
+    image: redis:7-alpine
+    container_name: merkana-redis-dev
+    environment:
+      REDIS_NAME: ${REDIS_NAME}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_URL: ${REDIS_URL}
+      REDIS_USER: ${REDIS_USER}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_DATABASE: ${REDIS_DATABASE}
+    ports:
+      - "${REDIS_PORT}:6379"
+    volumes:
+      - merkana-redis-dev-data:/data
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass ${REDIS_PASSWORD}
+      --databases 1
+    networks:
+      - merkana-dev-net
+
+  elastic-dev:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.1.2
+    container_name: merkana-elastic-dev
+    restart: unless-stopped
+    environment:
+      ELASTIC_HOST: ${ELASTIC_HOST}
+      ELASTIC_USERNAME: ${ELASTIC_USERNAME}
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
+      network.host: 0.0.0.0
+      # Cluster name for multiple nodes
+      cluster.name: "merkana-cluster"
+      node.name: "elastic-dev-node"
+      discovery.type: single-node                # For single-node setups
+      bootstrap.memory_lock: "true"             # Enable mlock
+      xpack.security.enabled: "true"            # Enable security
+      ES_JAVA_OPTS: "-Xms1g -Xmx1g"             # JVM heap
+    ports:
+      - "${ELASTIC_HTTP_PORT}:9200"
+      - "${ELASTIC_HTTPS_PORT}:9300"
+    volumes:
+      - merkana-elastic-dev-data:/usr/share/elasticsearch/data
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - merkana-dev-net
+
+volumes:
+  merkana-pg-dev-data: { }
+  merkana-redis-dev-data: { }
+  merkana-elastic-dev-data: { }
+
+networks:
+  merkana-dev-net:
+    driver: bridge
