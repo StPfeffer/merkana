@@ -3,7 +3,8 @@ name: Feature Request
 about: Suggest an idea to improve this project
 title: ''
 labels: enhancement
-assignees: '
+assignees: ''
+
 ---
 
 ## Summary

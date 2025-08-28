@@ -1,3 +1,118 @@
 spring:
   application:
     name: merkana
+
+  profiles:
+    active: prd
+
+  jpa:
+    properties:
+      hibernate:
+        default_schema: public
+        format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: 'America/Sao_Paulo'
+
+    show-sql: false
+    open-in-view: false
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+
+  flyway:
+    enabled: true
+
+logging:
+  pattern:
+    console: "%clr(${LOG_LEVEL_PATTERN:%5p}) %clr(){faint}%clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
+server:
+  port: 9090
+
+  tomcat:
+    mbeanregistry:
+      enabled: true
+
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+  compression:
+    enabled: true
+
+springdoc:
+  show-actuator: false
+
+management:
+  server:
+    port: 9090
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+  endpoints:
+    web:
+      exposure:
+        include: "health,info,prometheus,refresh"
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+app:
+  redis:
+    enabled: false # Configuration via profile
+
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY}
+      access-token-expiration: 2h
+      refresh-token-expiration: 3d
+
+    api-key:
+      enabled: true
+      header-name: "X-API-Key"
+      key: ${API_KEY:}
+      endpoints:
+        - "/actuator/prometheus"
+
+    cors:
+      enabled: true
+      allowCredentials: false
+      allowed-headers: "*"
+      allowed-methods: "GET,POST,PUT,DELETE,OPTIONS,HEAD,PATCH,TRACE"
+      allowed-origins: "*"
+      max-age: 30m
+
+  locale:
+    default-language: "pt-BR"
+
+  cache:
+    type: memory
+    enabled: true
+    debug-enabled: true
+
+    permission-ttl: PT30M      # 30 minutes
+    user-roles-ttl: PT15M      # 15 minutes
+    resource-ttl: PT1H         # 1 hour
+
+    # Max sizes for in-memory cache
+    max-size-permissions: 10000
+    max-size-user-roles: 5000
+    max-size-resources: 1000
+
+    warming:
+      enabled: false          # Enable for production
+      delay: PT30S            # Wait 30s after startup
+      interval: PT6H          # Re-warm every 6 hours

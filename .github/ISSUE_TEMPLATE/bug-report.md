@@ -3,7 +3,8 @@ name: Bug Report
 about: Create a detailed report to help us identify and fix issues
 title: ''
 labels: bug
-assignees: '
+assignees: ''
+
 ---
 
 ## Description

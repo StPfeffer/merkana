@@ -1,0 +1,26 @@
+spring:
+  config:
+    import: optional:file:.env.prd[.properties]
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${PG_USER}
+    password: ${PG_PASSWORD}
+    url: ${PG_URL}
+
+    hikari:
+      connection-timeout: 30000 # 30 segundos
+      maximum-pool-size: 100
+      max-lifetime: 900000 # 15 minutos
+      minimum-idle: 10
+      validation-timeout: 3000
+      idle-timeout: 300000 # 5 minutos
+
+app:
+  sync:
+    executor:
+      core-pool-size: 2
+      max-pool-size: 4
+      queue-capacity: 100
+      thread-name-prefix: sync-
+      keep-alive-seconds: 60

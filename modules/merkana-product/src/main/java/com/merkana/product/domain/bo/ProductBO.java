@@ -1,6 +1,5 @@
 package com.merkana.product.domain.bo;
 
-import com.merkana.core.domain.StoreAware;
 import lombok.*;
 
 import java.io.Serial;

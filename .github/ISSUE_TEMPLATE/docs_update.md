@@ -2,8 +2,9 @@
 name: Documentation Update
 about: Propose improvements or additions to project documentation
 title: ''
-labels: documentation
+labels: docs
 assignees: ''
+
 ---
 
 ## Summary
