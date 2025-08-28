@@ -1,24 +1,24 @@
-# Execução e Configuração com Docker
+# Execution and Configuration with Docker
 
-## Sumário
+## Summary
 
-- [Docker](#docker)
-- [Docker Compose](#docker-compose)
-- [Logs e Monitoramento](#logs-e-monitoramento)
+* [Docker](#docker)
+* [Docker Compose](#docker-compose)
+* [Logs and Monitoring](#logs-and-monitoring)
 
 ## Docker
 
 ```bash
-# Build da imagem
+# Build the image
 docker build -t merkana-api:latest .
 
-# Exportar imagem
+# Export image
 docker save merkana-api:latest > merkana-api.tar
 
-# Importar imagem
+# Import image
 docker load < merkana-api.tar
 
-# Executar container
+# Run container
 docker-compose up -d merkana-api
 ```
 
@@ -28,32 +28,34 @@ docker-compose up -d merkana-api
 docker-compose up -d merkana-api
 ```
 
-## Logs e Monitoramento
+## Logs and Monitoring
 
 ```bash
-# Capturar logs
+# Capture logs
 docker logs <container-id> > server.log
 
-# Ver consumo de recursos
+# Check resource usage
 docker stats <container-id>
 ```
 
-### **Arquivos Necessários**
+### **Required Files**
 
-1. **`Dockerfile`** (na raiz do projeto):
-    ```dockerfile
+1. **`Dockerfile`** (at the root of the project):
+
+   ```dockerfile
    FROM eclipse-temurin:21-jdk
-   COPY target/merkana-api-*.jar app.jar
-   ENTRYPOINT ["java", "-jar", "app.jar"]
-    ```
+   COPY target/merkana-api-*.jar merkana.jar
+   ENTRYPOINT ["java", "-jar", "merkana.jar"]
+   ```
 
-2. **`docker-compose.yml`** (opcional):
-    ```yaml
-    services:
-      merkana-api:
-        image: merkana-api:latest
-        ports:
-          - "9090:9090"
-        environment:
-          SERVER_PORT: 9090
-    ```
+2. **`docker-compose.yml`** (optional):
+
+   ```yaml
+   services:
+     merkana-api:
+       image: merkana-api:latest
+       ports:
+         - "9090:9090"
+       environment:
+         SERVER_PORT: 9090
+   ```
