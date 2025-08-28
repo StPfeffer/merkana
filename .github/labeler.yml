@@ -2,7 +2,7 @@ workflows:
   - changed-files:
       - any-glob-to-any-file: [ '.github/workflows/**/*' ]
 
-dependency:
+dependencies:
   - changed-files:
       - any-glob-to-any-file: [ 'pom.xml' ]
 
