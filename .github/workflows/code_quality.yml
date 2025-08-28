@@ -7,11 +7,15 @@ on:
       - dev
       - stage
       - production
+    paths:
+      - '**/*.java'    # only trigger when Java files change
   pull_request:
     branches:
       - dev
       - stage
       - production
+    paths:
+      - '**/*.java'    # only trigger when Java files change
 
 jobs:
   qodana:
