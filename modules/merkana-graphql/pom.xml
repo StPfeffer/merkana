@@ -37,7 +37,7 @@
             <plugin>
                 <groupId>io.github.deweyjose</groupId>
                 <artifactId>graphqlcodegen-maven-plugin</artifactId>
-                <version>1.61.5</version>
+                <version>3.5.1</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
