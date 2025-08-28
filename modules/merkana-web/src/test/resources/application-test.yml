@@ -1,0 +1,35 @@
+spring:
+  config:
+    import: optional:file:.env.dev[.properties]
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: merkana_hml
+    password: merkana_hml
+    url: jdbc:postgresql://192.168.200.63:5432/merkana_hml
+
+    hikari:
+      connection-timeout: 60000 # 60 segundos
+      maximum-pool-size: 20
+      max-lifetime: 1200000 # 20 minutos
+      minimum-idle: 5
+      validation-timeout: 3000
+      idle-timeout: 600000 # 10 minutos
+
+  flyway:
+    enabled: false
+
+app:
+  abac:
+    initialization:
+      enabled: false
+
+  role:
+    initialization:
+      enabled: false
+
+  redis:
+    enabled: false
+
+  cache:
+    enabled: false
