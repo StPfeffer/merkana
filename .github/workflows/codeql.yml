@@ -1,0 +1,53 @@
+name: "CodeQL Analysis"
+
+on:
+  workflow_dispatch:   # Manual trigger
+  push:
+    branches:
+      - dev
+      - stage
+      - production
+  pull_request:
+    branches:
+      - dev
+      - stage
+      - production
+  schedule:
+    - cron: '30 1 * * 0'
+
+jobs:
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      packages: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [ 'java' ]
+        build-mode: [ none ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'corretto'
+
+      - name: Build Project
+        run: |
+          mvn clean install -DskipTests
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3

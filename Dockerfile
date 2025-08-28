@@ -1,4 +1,4 @@
-FROM eclipse-temurin:24-jdk-jammy AS builder
+FROM eclipse-temurin:21-jdk-jammy AS builder
 
 WORKDIR /build
 
@@ -8,7 +8,7 @@ COPY modules modules
 
 RUN ./mvnw clean package -DskipTests -Dcheckstyle.skip
 
-FROM eclipse-temurin:24-jre-jammy AS runtime
+FROM eclipse-temurin:21-jre-jammy AS runtime
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends curl && \
