@@ -9,7 +9,7 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/first-interaction@v1
+      - uses: actions/first-interaction@v3
         with:
           repo-token: ${{secrets.GITHUB_TOKEN}}
           issue-message: "Thank you for bringing this to our attention! We truly appreciate your input and will review it as soon as possible. Your contributions help make this project better!"
