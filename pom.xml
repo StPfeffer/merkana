@@ -32,7 +32,7 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok.mapstruct.version>0.2.0</lombok.mapstruct.version>
 
-        <jacoco.plugin.version>0.8.13</jacoco.plugin.version>
+        <jacoco.plugin.version>0.8.14</jacoco.plugin.version>
     </properties>
 
     <modules>
