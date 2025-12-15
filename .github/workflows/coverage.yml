@@ -35,7 +35,7 @@ jobs:
         run: mvn clean install
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: coverage-report
           path: modules/merkana-web/target/site/jacoco
