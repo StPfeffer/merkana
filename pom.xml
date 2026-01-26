@@ -25,7 +25,7 @@
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <logback.version>1.5.20</logback.version>
+        <logback.version>1.5.26</logback.version>
         <jakarta.validation.version>3.1.1</jakarta.validation.version>
 
         <lombok.version>1.18.42</lombok.version>
